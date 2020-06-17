@@ -2,16 +2,25 @@ import { GluegunCommand } from 'gluegun'
 import { IInstallInputValues } from '../types'
 
 const command: GluegunCommand = {
-  name: 'install',
-  run: async toolbox => {
-    const { print, installInputs, generatePackageJson } = toolbox
+	name: 'install',
+	run: async toolbox => {
+		const {
+			print,
+			filesystem,
+			installInputs,
+			generatePackageJson,
+			generateAppVue
+		} = toolbox
 
-    const inputs: IInstallInputValues = await installInputs()
+		const inputs: IInstallInputValues = await installInputs()
 
-    await generatePackageJson(inputs)
+		const rootDir = `${filesystem.path()}/${inputs.app_name}`
 
-    print.debug(inputs)
-  }
+		await generatePackageJson(rootDir, inputs)
+		await generateAppVue(rootDir)
+
+		print.debug(inputs)
+	}
 }
 
 module.exports = command
