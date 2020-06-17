@@ -24,6 +24,12 @@ module.exports = async (toolbox: GluegunToolbox) => {
         type: 'input',
         name: 'app_description',
         message: 'Description'
+      },
+      {
+        type: 'input',
+        name: 'app_author',
+        message: 'Author',
+        default: 'agent one co., ltd.'
       }
     ])
 
