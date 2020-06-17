@@ -7,9 +7,9 @@ const command: GluegunCommand = {
 		const {
 			print,
 			filesystem,
+			system,
 			installInputs,
-			generatePackageJson,
-			generateAppVue
+			generatePackageJson
 		} = toolbox
 
 		const inputs: IInstallInputValues = await installInputs()
@@ -17,9 +17,10 @@ const command: GluegunCommand = {
 		const rootDir = `${filesystem.path()}/${inputs.app_name}`
 
 		await generatePackageJson(rootDir, inputs)
-		await generateAppVue(rootDir)
 
-		print.debug(inputs)
+		print.info('In processing...')
+		await system.run('yarn install --cwd ' + inputs.app_name, { trim: true })
+		print.info(`Done, generated file at ${inputs.app_name} 🎉`)
 	}
 }
 
