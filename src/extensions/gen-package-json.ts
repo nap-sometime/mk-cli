@@ -1,10 +1,10 @@
 import { GluegunToolbox } from 'gluegun'
-import { IInstallInputValues } from '../types'
+import { IInstallingInputs } from '../types'
 
 module.exports = async (toolbox: GluegunToolbox) => {
 	toolbox.generatePackageJson = async (
 		rootDir: string,
-		inputs: IInstallInputValues
+		inputs: IInstallingInputs
 	) => {
 		const { template } = toolbox
 

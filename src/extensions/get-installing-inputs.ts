@@ -1,13 +1,13 @@
 const path = require('path')
 
 import { prompt, GluegunToolbox } from 'gluegun'
-import { IInstallInputValues } from '../types'
+import { IInstallingInputs } from '../types'
 
 module.exports = async (toolbox: GluegunToolbox) => {
-	toolbox.installInputs = async () => {
+	toolbox.getInstallingInputs = async () => {
 		const { filesystem } = toolbox
 
-		const inputs: IInstallInputValues = await prompt.ask([
+		const inputs: IInstallingInputs = await prompt.ask([
 			{
 				type: 'input',
 				name: 'app_name',

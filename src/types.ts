@@ -1,4 +1,4 @@
-export interface IInstallInputValues {
+export interface IInstallingInputs {
 	app_name: string
 	app_version: string
 	app_description: string
