@@ -30,6 +30,13 @@ module.exports = async (toolbox: GluegunToolbox) => {
 				name: 'app_author',
 				message: 'Author',
 				default: 'agent one co., ltd.'
+			},
+			{
+				type: 'multiselect',
+				name: 'app_vue_libs',
+				message:
+					'Choose Vue Modules (Press <space> to select, <a> to toggle all, <i> to invert selection)',
+				choices: ['vue-meta', 'vue-router']
 			}
 		])
 

@@ -3,4 +3,5 @@ export interface IInstallInputValues {
 	app_version: string
 	app_description: string
 	app_author: string
+	app_vue_libs: string[]
 }
