@@ -1,2 +1,15 @@
-# mk-cli
-build mk project 
+## mk-cli
+
+### Link your new executable
+```
+yarn link
+```
+
+### Run
+```
+mk-cli
+
+or
+
+mk-cli install
+```
