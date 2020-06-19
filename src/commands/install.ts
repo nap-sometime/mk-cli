@@ -9,7 +9,8 @@ const command: GluegunCommand = {
 			getInstallingInputs,
 			generatePackageJson,
 			generateReadme,
-			generateStaticFiles
+			generateStaticFiles,
+			generateVueConfig
 		} = toolbox
 
 		const inputs: IInstallingInputs = await getInstallingInputs()
@@ -19,9 +20,14 @@ const command: GluegunCommand = {
 		await generatePackageJson(rootDir, inputs)
 		await generateReadme(rootDir, inputs)
 		await generateStaticFiles(rootDir)
+		await generateVueConfig(rootDir, inputs)
 
 		print.info('installing...')
-		print.info(await system.run('yarn install --cwd ' + inputs.app_name))
+		print.info(
+			await system.run('yarn install --cwd ' + inputs.app_name, {
+				trim: true
+			})
+		)
 	}
 }
 

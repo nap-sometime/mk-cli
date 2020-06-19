@@ -48,10 +48,5 @@ module.exports = async (toolbox: GluegunToolbox) => {
 			template: 'vue-shim.ts.ejs',
 			target: `${rootDir}/vue-shim.d.ts`
 		})
-
-		await template.generate({
-			template: 'vue-config.ts.ejs',
-			target: `${rootDir}/vue.config.js`
-		})
 	}
 }
