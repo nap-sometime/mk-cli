@@ -1,8 +1,8 @@
 {
-	"name": "mk-cli",
-	"version": "0.0.1",
-	"description": "mk-cli CLI",
+	"name": "@mk/cli",
+	"version": "0.1.0",
 	"private": true,
+	"license": "MIT",
 	"types": "build/types/types.d.ts",
 	"bin": {
 		"mk-cli": "bin/mk-cli"
@@ -29,7 +29,6 @@
 		"docs",
 		"bin"
 	],
-	"license": "MIT",
 	"dependencies": {
 		"gluegun": "latest"
 	},
