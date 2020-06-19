@@ -16,10 +16,10 @@
 			"core-js": "^3.6.5",
 			"single-spa-vue": "^1.5.2",
 			"systemjs-webpack-interop": "^2.1.1",
-			<%_ if (props.app_vue_libs.includes('vue-meta')) { _%>
+			<%_ if (props.vue_modules.includes('vue-meta')) { _%>
 			"vue-meta": "^2.4.0",
 			<%_ } _%>
-			<%_ if (props.app_vue_libs.includes('vue-router')) { _%>
+			<%_ if (props.vue_modules.includes('vue-router')) { _%>
 			"vue-router": "^3.3.2",
 			<%_ } _%>
 			"vue": "^2.6.11"

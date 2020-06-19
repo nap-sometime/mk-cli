@@ -1,5 +1,7 @@
 const path = require('path');
+<%_ if (props.want_https) { _%>
 const { readFileSync } = require('fs');
+<%_ } _%>
 const { name: npm_package_name } = require('./package.json');
 
 process.env.VUE_APP_NAME = npm_package_name;
@@ -13,7 +15,7 @@ module.exports = {
 			path: path.resolve(__dirname, 'dist'),
 			chunkFilename: 'js/[name].bundle.js',
 		},
-		externals: ['vue', 'vue-meta', 'vue-router', 'js-cookie', /^@mk\/.+/],
+		externals: ['vue', 'vue-router', 'vue-meta', /^@mk\/.+/],
 		resolve: {
 			alias: {
 				'@': path.resolve(__dirname, 'src'),
@@ -28,10 +30,12 @@ module.exports = {
 			sockPort: 8001,
 			sockHost: 'localhost',
 			port: 8001,
+			<%_ if (props.want_https) { _%>
 			https: {
-				cert: readFileSync(path.join(__dirname, '../cert/cert.pem')),
-				key: readFileSync(path.join(__dirname, '../cert/key.pem')),
+				cert: readFileSync(path.join(__dirname, '<%= props.https_cert_dir %>')),
+				key: readFileSync(path.join(__dirname, '<%= props.https_key_dir %>')),
 			},
+			<%_ } _%>
 		},
 	},
 };
