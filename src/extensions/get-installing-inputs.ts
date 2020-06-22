@@ -4,14 +4,17 @@ import { prompt, GluegunToolbox } from 'gluegun'
 import { IInstallingInputs } from '../types'
 
 module.exports = async (toolbox: GluegunToolbox) => {
-	toolbox.getInstallingInputs = async () => {
+	toolbox.getInstallingInputs = async (firstParameter?: string) => {
 		const { filesystem } = toolbox
+
+		const defaultAppName =
+			firstParameter || path.basename(filesystem.path())
 
 		const askAppName = {
 			type: 'input',
 			name: 'app_name',
 			message: 'Project name',
-			default: path.basename(filesystem.path())
+			default: defaultAppName
 		}
 
 		const askAppVersion = {

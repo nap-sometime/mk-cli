@@ -4,7 +4,7 @@ import { IInstallingInputs } from '../types'
 const command: GluegunCommand = {
 	name: 'install',
 	run: async toolbox => {
-		const { print, filesystem, system } = toolbox
+		const { parameters, filesystem, print, system } = toolbox
 		const {
 			getInstallingInputs,
 			generatePackageJson,
@@ -13,9 +13,15 @@ const command: GluegunCommand = {
 			generateVueConfig
 		} = toolbox
 
-		const inputs: IInstallingInputs = await getInstallingInputs()
+		const firstParameter = parameters.first
 
-		const rootDir = `${filesystem.path()}/${inputs.app_name}`
+		const rootDir = firstParameter
+			? `${filesystem.path()}/${firstParameter}`
+			: filesystem.path()
+
+		const inputs: IInstallingInputs = await getInstallingInputs(
+			firstParameter
+		)
 
 		await generatePackageJson(rootDir, inputs)
 		await generateReadme(rootDir, inputs)
