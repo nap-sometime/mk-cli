@@ -4,7 +4,11 @@ import { IInstallingInputs } from '../types'
 const command: GluegunCommand = {
 	name: 'install',
 	run: async toolbox => {
-		const { parameters, filesystem, print, system } = toolbox
+		const {
+			parameters,
+			filesystem,
+			system: { which, spawn }
+		} = toolbox
 		const {
 			getInstallingInputs,
 			generatePackageJson,
@@ -28,12 +32,13 @@ const command: GluegunCommand = {
 		await generateStaticFiles(rootDir)
 		await generateVueConfig(rootDir, inputs)
 
-		print.info('installing...')
-		print.info(
-			await system.run('yarn install --cwd ' + inputs.app_name, {
-				trim: true
-			})
-		)
+		const yarnPath = which('yarn')
+
+		return spawn(`cd ${rootDir} && ${yarnPath} install`, {
+			shell: true,
+			stdio: 'inherit',
+			stderr: 'inherit'
+		})
 	}
 }
 
