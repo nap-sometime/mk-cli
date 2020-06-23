@@ -1,15 +1,14 @@
 ## mk-cli
 
-### Link your new executable
-```
-yarn link
-```
+- use yarn for install package
 
-### Run
-```
-mk-cli
+``` bash
+# link your new executable
+$ yarn link
 
-or
+# run
+$ mk-cli install
 
-mk-cli install
+# or
+$ mk-cli install <project name>
 ```
