@@ -32,8 +32,8 @@ module.exports = {
 			port: 8001,
 			<%_ if (props.wantHttps) { _%>
 			https: {
-				cert: readFileSync(path.join(__dirname, '<%= props.httpsCertPath.trim() %>')),
-				key: readFileSync(path.join(__dirname, '<%= props.httpsKeyPath.trim() %>')),
+				cert: readFileSync(path.join(__dirname, '<%= props.httpsCertPath %>')),
+				key: readFileSync(path.join(__dirname, '<%= props.httpsKeyPath %>')),
 			},
 			<%_ } _%>
 		},
