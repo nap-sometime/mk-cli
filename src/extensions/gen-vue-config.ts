@@ -1,10 +1,10 @@
 import { GluegunToolbox } from 'gluegun'
-import { IInstallingInputs } from '../types'
+import { IInstallDetails } from '../types'
 
 module.exports = async (toolbox: GluegunToolbox) => {
 	toolbox.generateVueConfig = async (
 		rootDir: string,
-		inputs: IInstallingInputs
+		inputs: IInstallDetails
 	) => {
 		const { template } = toolbox
 
@@ -13,7 +13,7 @@ module.exports = async (toolbox: GluegunToolbox) => {
 			target: `${rootDir}/vue.config.js`,
 			props: {
 				...inputs,
-				want_https: inputs.yesno
+				want_https: inputs.wantHttps
 			}
 		})
 	}

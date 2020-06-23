@@ -1,10 +1,10 @@
 import { GluegunToolbox } from 'gluegun'
-import { IInstallingInputs } from '../types'
+import { IInstallDetails } from '../types'
 
 module.exports = async (toolbox: GluegunToolbox) => {
 	toolbox.generateReadme = async (
 		rootDir: string,
-		inputs: IInstallingInputs
+		inputs: IInstallDetails
 	) => {
 		const { template } = toolbox
 
