@@ -24,6 +24,9 @@ module.exports = async (toolbox: GluegunToolbox) => {
 			'vue-shim.d.ts.ejs'
 		]
 
+		const removeComma = (str?: string) =>
+			str ? str.replace("'", '').replace("' ", '') : str
+
 		const filesCopy = files.reduce((acc, file) => {
 			const target = `${cmdStrPath}/${file.replace('.ejs', '')}`
 
@@ -32,12 +35,8 @@ module.exports = async (toolbox: GluegunToolbox) => {
 				target,
 				props: {
 					...details,
-					httpsCertPath: details.httpsCertPath
-						.replace("'", '')
-						.replace("' ", ''),
-					httpsKeyPath: details.httpsKeyPath
-						.replace("'", '')
-						.replace("' ", ''),
+					httpsCertPath: removeComma(details.httpsCertPath),
+					httpsKeyPath: removeComma(details.httpsKeyPath),
 					year: new Date().getFullYear()
 				}
 			})
