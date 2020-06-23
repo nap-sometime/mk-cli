@@ -1,10 +1,10 @@
-export interface IInstallingInputs {
-	app_name: string
-	app_version: string
-	app_description: string
-	app_author: string
-	vue_modules: string[]
-	yesno: boolean
-	https_cert_dir?: string
-	https_key_dir?: string
+export interface IInstallDetails {
+	appName: string
+	appVersion: string
+	appDescription: string
+	appAuthor: string
+	vueModules: string[]
+	wantHttps: boolean
+	httpsCertPath?: string
+	httpsKeyPath?: string
 }
