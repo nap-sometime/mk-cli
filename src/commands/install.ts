@@ -1,44 +1,27 @@
 import { GluegunCommand } from 'gluegun'
-import { IInstallingInputs } from '../types'
 
 const command: GluegunCommand = {
 	name: 'install',
 	run: async toolbox => {
+		const { parameters, filesystem, strings } = toolbox
+
 		const {
-			parameters,
-			filesystem,
-			system: { which, spawn }
-		} = toolbox
-		const {
-			getInstallingInputs,
-			generatePackageJson,
-			generateReadme,
-			generateStaticFiles,
-			generateVueConfig
+			promptInstallDetails,
+			generateInstallationFiles,
+			installationPackage
 		} = toolbox
 
-		const firstParameter = parameters.first
+		const firstParam = parameters.first
 
-		const rootDir = firstParameter
-			? `${filesystem.path()}/${firstParameter}`
-			: filesystem.path()
+		const cmdStrPath = strings.isBlank(firstParam)
+			? filesystem.path()
+			: `${filesystem.path()}/${firstParam}`
 
-		const inputs: IInstallingInputs = await getInstallingInputs(
-			firstParameter
-		)
+		const details = await promptInstallDetails(firstParam)
 
-		await generatePackageJson(rootDir, inputs)
-		await generateReadme(rootDir, inputs)
-		await generateStaticFiles(rootDir)
-		await generateVueConfig(rootDir, inputs)
+		await generateInstallationFiles(cmdStrPath, details)
 
-		const yarnPath = which('yarn')
-
-		return spawn(`cd ${rootDir} && ${yarnPath} install`, {
-			shell: true,
-			stdio: 'inherit',
-			stderr: 'inherit'
-		})
+		await installationPackage(cmdStrPath)
 	}
 }
 
