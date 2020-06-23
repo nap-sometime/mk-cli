@@ -1,5 +1,5 @@
 const path = require('path');
-<%_ if (props.want_https) { _%>
+<%_ if (props.wantHttps) { _%>
 const { readFileSync } = require('fs');
 <%_ } _%>
 const { name: npm_package_name } = require('./package.json');
@@ -30,10 +30,10 @@ module.exports = {
 			sockPort: 8001,
 			sockHost: 'localhost',
 			port: 8001,
-			<%_ if (props.want_https) { _%>
+			<%_ if (props.wantHttps) { _%>
 			https: {
-				cert: readFileSync(path.join(__dirname, '<%= props.https_cert_dir %>')),
-				key: readFileSync(path.join(__dirname, '<%= props.https_key_dir %>')),
+				cert: readFileSync(path.join(__dirname, '<%= props.httpsCertPath.trim() %>')),
+				key: readFileSync(path.join(__dirname, '<%= props.httpsKeyPath.trim() %>')),
 			},
 			<%_ } _%>
 		},

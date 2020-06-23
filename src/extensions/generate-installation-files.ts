@@ -8,7 +8,7 @@ module.exports = async (toolbox: GluegunToolbox) => {
 	) => {
 		const { template } = toolbox
 
-		const files = ['package.json.ejs', 'README.md.ejs']
+		const files = ['package.json.ejs', 'README.md.ejs', 'vue.config.js.ejs']
 
 		const filesCopy = files.reduce((acc, file) => {
 			const target = `${cmdStrPath}/${file.replace('.ejs', '')}`
