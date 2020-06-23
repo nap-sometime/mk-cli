@@ -21,8 +21,18 @@ module.exports = async (toolbox: GluegunToolbox) => {
 			'babel.config.js.ejs',
 			'LICENSE.ejs',
 			'tsconfig.json.ejs',
-			'vue-shim.d.ts.ejs'
+			'vue-shim.d.ts.ejs',
+			'public/favicon.ico.ejs',
+			'public/index.html.ejs',
+			'src/App.vue.ejs',
+			'src/main.ts.ejs',
+			'src/set_public_path.ts.ejs',
+			'src/utils/get_env/index.ts.ejs'
 		]
+
+		if (details.vueModules.includes('vue-router')) {
+			files.push('src/router.ts.ejs')
+		}
 
 		const removeComma = (str?: string) =>
 			str ? str.replace("'", '').replace("' ", '') : str
