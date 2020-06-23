@@ -13,5 +13,11 @@ module.exports = async (toolbox: GluegunToolbox) => {
 			target: `${cmdStrPath}/package.json`,
 			props: details
 		})
+
+		await template.generate({
+			template: 'README.md.ejs',
+			target: `${cmdStrPath}/README.md`,
+			props: details
+		})
 	}
 }
