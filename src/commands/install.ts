@@ -1,4 +1,4 @@
-import { GluegunCommand } from 'gluegun'
+import { GluegunCommand, prompt } from 'gluegun'
 
 const command: GluegunCommand = {
 	name: 'install',
@@ -16,6 +16,12 @@ const command: GluegunCommand = {
 
 		if (strings.isBlank(baseAppUrl)) {
 			throw new Error('BASE_APP_URL is not found.')
+		}
+
+		const haveGit = await prompt.confirm('Have Git?')
+
+		if (!haveGit) {
+			throw new Error('should have git for install.')
 		}
 
 		await cloneBaseApp(baseAppUrl)
