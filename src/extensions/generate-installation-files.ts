@@ -6,32 +6,27 @@ module.exports = async (toolbox: GluegunToolbox) => {
 		cmdStrPath: string,
 		details: IInstallDetails
 	) => {
-		const { template } = toolbox
+		const { filesystem, template } = toolbox
+
+		filesystem.copy('mk-base/mk-app-vue', details.appName, {
+			overwrite: true
+		})
+
+		filesystem.remove('mk-base')
 
 		const files = [
 			'package.json.ejs',
 			'README.md.ejs',
 			'vue.config.js.ejs',
-			'.editorconfig.ejs',
-			'.eslintignore.ejs',
-			'.eslintrc.js.ejs',
-			'.gitignore.ejs',
-			'.prettierrc.json.ejs',
-			'.tool-versions.ejs',
-			'babel.config.js.ejs',
-			'LICENSE.ejs',
-			'tsconfig.json.ejs',
-			'vue-shim.d.ts.ejs',
-			'public/favicon.ico.ejs',
-			'public/index.html.ejs',
 			'src/App.vue.ejs',
 			'src/main.ts.ejs',
-			'src/set_public_path.ts.ejs',
-			'src/utils/get_env/index.ts.ejs'
+			'src/set_public_path.ts.ejs'
 		]
 
 		if (details.vueModules.includes('vue-router')) {
 			files.push('src/router.ts.ejs')
+		} else {
+			filesystem.remove(`${cmdStrPath}/src/router.ts`)
 		}
 
 		const removeComma = (str?: string) =>
