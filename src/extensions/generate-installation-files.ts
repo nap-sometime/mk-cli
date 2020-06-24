@@ -16,7 +16,6 @@ module.exports = async (toolbox: GluegunToolbox) => {
 
 		const files = [
 			'package.json.ejs',
-			'README.md.ejs',
 			'vue.config.js.ejs',
 			'src/App.vue.ejs',
 			'src/main.ts.ejs',
