@@ -6,10 +6,19 @@ const command: GluegunCommand = {
 		const { parameters, filesystem, strings } = toolbox
 
 		const {
+			cloneBaseApp,
 			promptInstallDetails,
 			generateInstallationFiles,
 			installationPackage
 		} = toolbox
+
+		const baseAppUrl = process.env.BASE_APP_URL
+
+		if (strings.isBlank(baseAppUrl)) {
+			throw new Error('BASE_APP_URL is not found.')
+		}
+
+		await cloneBaseApp(baseAppUrl)
 
 		const firstParam = parameters.first
 
