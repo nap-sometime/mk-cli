@@ -1,12 +1,12 @@
 const path = require('path')
 
-import { GluegunCommand, prompt } from 'gluegun'
+import { GluegunCommand } from 'gluegun'
 import { ICreateNewProjectDetails } from '../types'
 
 const command: GluegunCommand = {
 	name: 'add',
 	run: async toolbox => {
-		const { print, parameters, strings, filesystem } = toolbox
+		const { print, parameters, strings, filesystem, system } = toolbox
 		const {
 			add_cloneBaseApp,
 			add_promptDetails,
@@ -20,6 +20,12 @@ const command: GluegunCommand = {
 
 		if (strings.isBlank(baseAppUrl)) {
 			throw new Error('⚠️  BASE_APP_URL is not found.')
+		}
+
+		const gitPath = system.which('git')
+
+		if (!gitPath) {
+			throw new Error('⚠️  should have git for create a new project.')
 		}
 
 		const options = parameters.options
@@ -59,12 +65,6 @@ const command: GluegunCommand = {
 			await add_installPackage(cmdStrPath)
 
 			return
-		}
-
-		const haveGit = await prompt.confirm('Have Git?')
-
-		if (!haveGit) {
-			throw new Error('⚠️  should have git for create a new project.')
 		}
 
 		await add_cloneBaseApp(baseAppUrl)
