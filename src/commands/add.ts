@@ -1,3 +1,5 @@
+const path = require('path')
+
 import { GluegunCommand, prompt } from 'gluegun'
 import { ICreateNewProjectDetails } from '../types'
 
@@ -13,18 +15,43 @@ const command: GluegunCommand = {
 			add_installPackage
 		} = toolbox
 
+		const baseAppUrl = process.env.BASE_APP_URL
+
+		if (strings.isBlank(baseAppUrl)) {
+			throw new Error('⚠️  BASE_APP_URL is not found.')
+		}
+
 		const options = parameters.options
+		const firstParam = parameters.first
+
+		const defaultAppName = firstParam || path.basename(filesystem.path())
+
+		const defaultDetails: ICreateNewProjectDetails = {
+			appName: defaultAppName,
+			appVersion: '1.0.0',
+			appDescription: '',
+			appAuthor: 'agent one co., ltd.',
+			vueModules: [],
+			wantHttps: false
+		}
 
 		// default, use all default setup
 		if (options.y) {
-			print.info('🐶 In Processing... ' + 'with y option')
+			if (!strings.isNotString(options.y)) {
+				defaultDetails.appName = options.y
+			}
 
-			return
-		}
+			await add_cloneBaseApp(baseAppUrl)
 
-		// use template external
-		if (options.t) {
-			print.info('🐶 In Processing... ' + 'with t option')
+			const cmdStrPath = `${filesystem.path()}/${defaultDetails.appName}`
+
+			print.info('💾 Installing to ' + cmdStrPath)
+
+			await add_replaceBaseApp(defaultDetails.appName)
+
+			await add_generateFiles(cmdStrPath, defaultDetails)
+
+			await add_installPackage(cmdStrPath)
 
 			return
 		}
@@ -35,25 +62,24 @@ const command: GluegunCommand = {
 			throw new Error('⚠️  should have git for create a new project.')
 		}
 
-		const baseAppUrl = process.env.BASE_APP_URL
+		// use template external
+		if (options.t) {
+			print.info('🐶 In Processing... ' + 'with t option')
 
-		if (strings.isBlank(baseAppUrl)) {
-			throw new Error('⚠️  BASE_APP_URL is not found.')
+			return
 		}
+
+		const details: ICreateNewProjectDetails = await add_promptDetails(
+			defaultDetails
+		)
 
 		await add_cloneBaseApp(baseAppUrl)
 
-		const firstParam = parameters.first
+		const cmdStrPath = `${filesystem.path()}/${details.appName}`
 
-		const details: ICreateNewProjectDetails = await add_promptDetails(
-			firstParam
-		)
+		print.info('💾 Installing to ' + cmdStrPath)
 
-		const appName = details.appName
-
-		await add_replaceBaseApp(appName)
-
-		const cmdStrPath = `${filesystem.path()}/${appName}`
+		await add_replaceBaseApp(details.appName)
 
 		await add_generateFiles(cmdStrPath, details)
 

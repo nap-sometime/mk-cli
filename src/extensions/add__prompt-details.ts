@@ -1,26 +1,22 @@
-const path = require('path')
-
 import { prompt, GluegunToolbox } from 'gluegun'
 import { ICreateNewProjectDetails } from '../types'
 
 module.exports = async (toolbox: GluegunToolbox) => {
-	toolbox.add_promptDetails = async (firstParam?: string) => {
-		const { filesystem } = toolbox
-
-		const defaultAppName = firstParam || path.basename(filesystem.path())
-
+	toolbox.add_promptDetails = async (
+		defaultDetails: ICreateNewProjectDetails
+	) => {
 		const askAppName = {
 			type: 'input',
 			name: 'appName',
 			message: 'Project name',
-			default: defaultAppName
+			default: defaultDetails.appName
 		}
 
 		const askAppVersion = {
 			type: 'input',
 			name: 'appVersion',
 			message: 'Version',
-			default: '1.0.0'
+			default: defaultDetails.appVersion
 		}
 
 		const askAppDescription = {
@@ -33,7 +29,7 @@ module.exports = async (toolbox: GluegunToolbox) => {
 			type: 'input',
 			name: 'appAuthor',
 			message: 'Author',
-			default: 'agent one co., ltd.'
+			default: defaultDetails.appAuthor
 		}
 
 		const askVueModules = {
@@ -47,7 +43,8 @@ module.exports = async (toolbox: GluegunToolbox) => {
 		const askWantHttps = {
 			type: 'confirm',
 			name: 'wantHttps',
-			message: 'Want HTTPS?'
+			message: 'Want HTTPS?',
+			default: defaultDetails.wantHttps
 		}
 
 		const questions = [
