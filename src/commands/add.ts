@@ -8,6 +8,7 @@ const command: GluegunCommand = {
 		const {
 			add_cloneBaseApp,
 			add_promptDetails,
+			add_replaceBaseApp,
 			add_generateFiles,
 			add_installPackage
 		} = toolbox
@@ -48,7 +49,11 @@ const command: GluegunCommand = {
 			firstParam
 		)
 
-		const cmdStrPath = `${filesystem.path()}/${details.appName}`
+		const appName = details.appName
+
+		await add_replaceBaseApp(appName)
+
+		const cmdStrPath = `${filesystem.path()}/${appName}`
 
 		await add_generateFiles(cmdStrPath, details)
 

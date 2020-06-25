@@ -8,12 +8,6 @@ module.exports = async (toolbox: GluegunToolbox) => {
 	) => {
 		const { filesystem, template } = toolbox
 
-		filesystem.copy('mk-base/mk-app-vue', details.appName, {
-			overwrite: true
-		})
-
-		filesystem.remove('mk-base')
-
 		const files = [
 			'package.json.ejs',
 			'vue.config.js.ejs',
