@@ -38,11 +38,11 @@ const command: GluegunCommand = {
 
 		// default, use all default setup
 		if (options.y) {
+			await add_cloneBaseApp(baseAppUrl)
+
 			if (!strings.isNotString(options.y)) {
 				defaultDetails.appName = options.y
 			}
-
-			await add_cloneBaseApp(baseAppUrl)
 
 			const cmdStrPath = `${filesystem.path()}/${defaultDetails.appName}`
 
@@ -63,41 +63,26 @@ const command: GluegunCommand = {
 			throw new Error('⚠️  should have git for create a new project.')
 		}
 
+		await add_cloneBaseApp(baseAppUrl)
+
 		// use template external
 		if (options.t) {
 			if (strings.isNotString(options.t)) {
-				await add_cloneBaseApp(baseAppUrl)
-
 				const templates = toolbox.filesystem.subdirectories('mk-base')
 
-				await add_promptTemplate(templates)
+				const details = await add_promptTemplate(templates)
 
-				const details: ICreateNewProjectDetails = await add_promptDetails(
-					defaultDetails
+				await add_replaceBaseApp(
+					defaultDetails.appName,
+					details.template
 				)
-
-				const cmdStrPath = `${filesystem.path()}/${details.appName}`
-
-				print.info('💾 Installing to ' + cmdStrPath)
-
-				await add_replaceBaseApp(details.appName, details.template)
-
-				await add_installPackage(cmdStrPath)
-
-				return
+			} else {
+				await add_replaceBaseApp(defaultDetails.appName, options.t)
 			}
 
-			await add_cloneBaseApp(baseAppUrl)
-
-			const details: ICreateNewProjectDetails = await add_promptDetails(
-				defaultDetails
-			)
-
-			const cmdStrPath = `${filesystem.path()}/${details.appName}`
+			const cmdStrPath = `${filesystem.path()}/${defaultDetails.appName}`
 
 			print.info('💾 Installing to ' + cmdStrPath)
-
-			await add_replaceBaseApp(details.appName, options.t)
 
 			await add_installPackage(cmdStrPath)
 
@@ -107,8 +92,6 @@ const command: GluegunCommand = {
 		const details: ICreateNewProjectDetails = await add_promptDetails(
 			defaultDetails
 		)
-
-		await add_cloneBaseApp(baseAppUrl)
 
 		const cmdStrPath = `${filesystem.path()}/${details.appName}`
 
