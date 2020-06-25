@@ -1,4 +1,5 @@
 import { GluegunCommand, prompt } from 'gluegun'
+import { ICreateNewProjectDetails } from '../types'
 
 const command: GluegunCommand = {
 	name: 'add',
@@ -43,11 +44,11 @@ const command: GluegunCommand = {
 
 		const firstParam = parameters.first
 
-		const cmdStrPath = strings.isBlank(firstParam)
-			? filesystem.path()
-			: `${filesystem.path()}/${firstParam}`
+		const details: ICreateNewProjectDetails = await add_promptDetails(
+			firstParam
+		)
 
-		const details = await add_promptDetails(firstParam)
+		const cmdStrPath = `${filesystem.path()}/${details.appName}`
 
 		await add_generateFiles(cmdStrPath, details)
 
