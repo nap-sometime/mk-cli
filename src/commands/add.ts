@@ -36,7 +36,11 @@ const command: GluegunCommand = {
 			wantHttps: false
 		}
 
-		// default, use all default setup
+		/**
+		 * use default settings
+		 *
+		 * no ask settings
+		 */
 		if (options.y) {
 			await add_cloneBaseApp(baseAppUrl)
 
@@ -65,10 +69,19 @@ const command: GluegunCommand = {
 
 		await add_cloneBaseApp(baseAppUrl)
 
-		// use template external
+		/**
+		 * use template external
+		 *
+		 * no ask settings
+		 * no generate or modify file of template
+		 */
 		if (options.t) {
 			if (strings.isNotString(options.t)) {
-				const templates = toolbox.filesystem.subdirectories('mk-base')
+				const templates = toolbox.filesystem.subdirectories(
+					'mk-base',
+					true,
+					'mk*'
+				)
 
 				const details = await add_promptTemplate(templates)
 
@@ -89,8 +102,10 @@ const command: GluegunCommand = {
 			return
 		}
 
+		// default
 		const details: ICreateNewProjectDetails = await add_promptDetails(
-			defaultDetails
+			defaultDetails,
+			options
 		)
 
 		const cmdStrPath = `${filesystem.path()}/${details.appName}`
