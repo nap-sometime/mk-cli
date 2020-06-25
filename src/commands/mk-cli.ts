@@ -8,8 +8,10 @@ const command: GluegunCommand = {
 		print.info(`Usage: mk-cli <command> [options]
 
 Options:
-  -V, --version                              output the version number
+  -v, --version                              output the version number
   -h, --help                                 output usage information
+  -t, -t <template>                          use external template
+  -y                                         use default settings 
 
 Commands:
   add [options] <app-name>     create a new project
