@@ -10,6 +10,7 @@ const command: GluegunCommand = {
 		const {
 			add_cloneBaseApp,
 			add_promptDetails,
+			add_promptTemplate,
 			add_replaceBaseApp,
 			add_generateFiles,
 			add_installPackage
@@ -64,7 +65,41 @@ const command: GluegunCommand = {
 
 		// use template external
 		if (options.t) {
-			print.info('🐶 In Processing... ' + 'with t option')
+			if (strings.isNotString(options.t)) {
+				await add_cloneBaseApp(baseAppUrl)
+
+				const templates = toolbox.filesystem.subdirectories('mk-base')
+
+				await add_promptTemplate(templates)
+
+				const details: ICreateNewProjectDetails = await add_promptDetails(
+					defaultDetails
+				)
+
+				const cmdStrPath = `${filesystem.path()}/${details.appName}`
+
+				print.info('💾 Installing to ' + cmdStrPath)
+
+				await add_replaceBaseApp(details.appName, details.template)
+
+				await add_installPackage(cmdStrPath)
+
+				return
+			}
+
+			await add_cloneBaseApp(baseAppUrl)
+
+			const details: ICreateNewProjectDetails = await add_promptDetails(
+				defaultDetails
+			)
+
+			const cmdStrPath = `${filesystem.path()}/${details.appName}`
+
+			print.info('💾 Installing to ' + cmdStrPath)
+
+			await add_replaceBaseApp(details.appName, options.t)
+
+			await add_installPackage(cmdStrPath)
 
 			return
 		}

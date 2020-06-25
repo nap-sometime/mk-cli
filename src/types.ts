@@ -7,4 +7,5 @@ export interface ICreateNewProjectDetails {
 	wantHttps: boolean
 	httpsCertPath?: string
 	httpsKeyPath?: string
+	template?: string
 }
