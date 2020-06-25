@@ -1,10 +1,10 @@
 const path = require('path')
 
 import { prompt, GluegunToolbox } from 'gluegun'
-import { IInstallDetails } from '../types'
+import { ICreateNewProjectDetails } from '../types'
 
 module.exports = async (toolbox: GluegunToolbox) => {
-	toolbox.promptInstallDetails = async (firstParam?: string) => {
+	toolbox.add_promptDetails = async (firstParam?: string) => {
 		const { filesystem } = toolbox
 
 		const defaultAppName = firstParam || path.basename(filesystem.path())
@@ -59,7 +59,7 @@ module.exports = async (toolbox: GluegunToolbox) => {
 			askWantHttps
 		]
 
-		const details: IInstallDetails = await prompt.ask(questions)
+		const details: ICreateNewProjectDetails = await prompt.ask(questions)
 
 		if (details.wantHttps) {
 			const askCertPath = {

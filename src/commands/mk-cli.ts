@@ -12,8 +12,8 @@ Options:
   -h, --help                                 output usage information
 
 Commands:
-  install [options] <plugin> [pluginOptions]     install a plugin and invoke its generator in an already created project
-		`)
+  add [options] <app-name>     create a new project
+  `)
 	}
 }
 

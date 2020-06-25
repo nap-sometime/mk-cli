@@ -1,12 +1,10 @@
 import { GluegunToolbox } from 'gluegun'
 
 module.exports = async (toolbox: GluegunToolbox) => {
-	toolbox.installationPackage = async (cmdStrPath: string) => {
+	toolbox.add_cloneBaseApp = async (baseAppUrl: string) => {
 		const { system } = toolbox
 
-		const yarnPath = system.which('yarn')
-
-		return system.spawn(`cd ${cmdStrPath} && ${yarnPath} install`, {
+		await system.spawn(`git clone ${baseAppUrl} mk-base`, {
 			shell: true,
 			stdio: 'inherit',
 			stderr: 'inherit'

@@ -1,10 +1,10 @@
 import { GluegunToolbox } from 'gluegun'
-import { IInstallDetails } from '../types'
+import { ICreateNewProjectDetails } from '../types'
 
 module.exports = async (toolbox: GluegunToolbox) => {
-	toolbox.generateInstallationFiles = async (
+	toolbox.add_generateFiles = async (
 		cmdStrPath: string,
-		details: IInstallDetails
+		details: ICreateNewProjectDetails
 	) => {
 		const { filesystem, template } = toolbox
 

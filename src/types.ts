@@ -1,4 +1,4 @@
-export interface IInstallDetails {
+export interface ICreateNewProjectDetails {
 	appName: string
 	appVersion: string
 	appDescription: string
