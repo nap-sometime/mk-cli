@@ -1,4 +1,4 @@
-const { system, filesystem } = require('gluegun')
+import { system, filesystem } from 'gluegun'
 
 const src = filesystem.path(__dirname, '..')
 

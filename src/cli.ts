@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv'
 
 dotenv.config({ path: `${__dirname}/.env` })
 
-const { build } = require('gluegun')
+import { build } from 'gluegun'
 
 async function run(argv) {
 	const cli = build()
