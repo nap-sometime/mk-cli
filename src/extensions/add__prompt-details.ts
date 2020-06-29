@@ -1,10 +1,14 @@
 import { prompt, GluegunToolbox } from 'gluegun'
 import { ICreateNewProjectDetails } from '../types'
+import { Options } from 'gluegun/build/types/domain/options'
 
 module.exports = async (toolbox: GluegunToolbox) => {
 	toolbox.add_promptDetails = async (
-		defaultDetails: ICreateNewProjectDetails
+		defaultDetails: ICreateNewProjectDetails,
+		options: Options
 	) => {
+		const { strings } = toolbox
+
 		const askAppName = {
 			type: 'input',
 			name: 'appName',
@@ -47,16 +51,28 @@ module.exports = async (toolbox: GluegunToolbox) => {
 			default: defaultDetails.wantHttps
 		}
 
-		const questions = [
-			askAppName,
-			askAppVersion,
-			askAppDescription,
-			askAppAuthor,
-			askVueModules,
-			askWantHttps
-		]
+		const optionVueModules = options.m
+
+		const questions = strings.isNotString(optionVueModules)
+			? [
+					askAppName,
+					askAppVersion,
+					askAppDescription,
+					askAppAuthor,
+					askVueModules,
+					askWantHttps
+			  ]
+			: [
+					askAppName,
+					askAppVersion,
+					askAppDescription,
+					askAppAuthor,
+					askWantHttps
+			  ]
 
 		const details: ICreateNewProjectDetails = await prompt.ask(questions)
+
+		details.vueModules = optionVueModules.split(',')
 
 		if (details.wantHttps) {
 			const askCertPath = {
