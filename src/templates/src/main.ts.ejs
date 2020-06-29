@@ -1,0 +1,32 @@
+import './set_public_path'
+import Vue from 'vue'
+<%_ if (props.vueModules.includes('vue-router')) { _%>
+import VueRouter from 'vue-router'
+<%_ } _%>
+<%_ if (props.vueModules.includes('vue-meta')) { _%>
+import VueMeta from 'vue-meta'
+<%_ } _%>
+import singleSpa from 'single-spa-vue'
+<%_ if (props.vueModules.includes('vue-router')) { _%>
+import router from './router'
+<%_ } _%>
+import app from './App.vue'
+
+<%_ if (props.vueModules.includes('vue-router')) { _%>
+Vue.use(VueRouter)
+<%_ } _%>
+<%_ if (props.vueModules.includes('vue-meta')) { _%>
+Vue.use(VueMeta)
+<%_ } _%>
+
+Vue.config.productionTip = false
+
+export const { bootstrap, mount, unmount } = singleSpa({
+	Vue,
+	appOptions: {
+		render: (h: any) => h(app),
+		<%_ if (props.vueModules.includes('vue-router')) { _%>
+		router,
+		<%_ } _%>
+	}
+})

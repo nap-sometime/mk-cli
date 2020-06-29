@@ -1,0 +1,36 @@
+<template>
+	<div id="app-container">
+		<router-view></router-view>
+	</div>
+</template>
+
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
+	name: 'App',
+	mounted() {
+		this.logInterval();
+	},
+	methods: {
+		logInterval() {
+			let timer;
+			if (!timer) clearInterval(timer);
+			timer = setInterval(() => {
+				console.log(`${Date.now()} - <%= props.appName %>`);
+			}, 5000);
+		},
+	},
+});
+</script>
+
+<style scoped>
+#app-container {
+	font-family: Avenir, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: center;
+	color: #2c3e50;
+	margin-top: 60px;
+}
+</style>
