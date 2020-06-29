@@ -11,7 +11,7 @@ Options:
   -v, --version                              output the version number
   -h, --help                                 output usage information
   -t, -t <template>                          use external template
-  -m <vue-modules>                           set vue modules
+  -m [vue-modules]                           set vue modules
   -y                                         use default settings
 
 Commands:
