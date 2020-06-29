@@ -72,8 +72,6 @@ module.exports = async (toolbox: GluegunToolbox) => {
 
 		const details: ICreateNewProjectDetails = await prompt.ask(questions)
 
-		details.vueModules = optionVueModules.split(',')
-
 		if (details.wantHttps) {
 			const askCertPath = {
 				type: 'input',
@@ -92,6 +90,10 @@ module.exports = async (toolbox: GluegunToolbox) => {
 			const httpsQuestions = [askCertPath, askKeyPath]
 
 			await prompt.ask(httpsQuestions)
+		}
+
+		if (!strings.isNotString(optionVueModules)) {
+			details.vueModules = optionVueModules.split(',')
 		}
 
 		return details
