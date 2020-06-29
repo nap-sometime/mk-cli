@@ -11,7 +11,8 @@ Options:
   -v, --version                              output the version number
   -h, --help                                 output usage information
   -t, -t <template>                          use external template
-  -y                                         use default settings 
+  -m <vue-modules>                           set vue modules
+  -y                                         use default settings
 
 Commands:
   add [options] <app-name>     create a new project
