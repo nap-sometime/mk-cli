@@ -10,7 +10,9 @@ process.env.VUE_APP_NAME = npm_package_name;
 
 // helper
 const isProd = ['production', 'runtest'].some((v) => process.env.NODE_ENV === v);
+<%_ if (props.wantHttps) { _%>
 const loadFile = (path = '') => readFileSync(path);
+<%_ } _%>
 
 // config webpack dev server
 const devServer = isProd
